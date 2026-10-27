@@ -165,7 +165,7 @@ begin
     new.id is distinct from old.id or
     new.email is distinct from old.email or
     new.role is distinct from old.role or
-    new.status is distinct from old.status
+    (new.status is distinct from old.status and not public.is_admin())
   ) then
     raise exception 'Profile identity, email, role, and status are server-managed.';
   end if;

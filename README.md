@@ -141,6 +141,29 @@ and never in chat.
 
 4. Restart `npm run dev`. `src/lib/api.ts` selects the Supabase backend automatically.
 
+### Promote the first admin
+
+After the intended operator has created and confirmed an account, copy that
+account's UUID from **Authentication → Users** in Supabase and run this in the
+SQL Editor:
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = 'THE-OPERATOR-UUID';
+```
+
+Do not grant admin through the browser or by editing a client request. The
+database blocks users from changing their own role.
+
+### Configure confirmation links
+
+In **Authentication → URL Configuration**, allow your local development URL
+(`http://127.0.0.1:5173` and/or `http://localhost:5173`) while developing.
+Before launch, set the Site URL and allowed redirect URLs to the real HTTPS
+domain. The app sends confirmation links back to the address currently running
+WishDrop, so every destination must be explicitly allowed by Supabase.
+
 Only the **anon** key belongs in the client. Payment provider secrets, service-role keys
 and webhook signing secrets must live on a server, never in this bundle.
 

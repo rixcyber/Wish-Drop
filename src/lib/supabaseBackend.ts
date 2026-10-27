@@ -229,7 +229,13 @@ export const supabaseBackend: Backend = {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { display_name: displayName, anonymous } },
+      options: {
+        data: { display_name: displayName, anonymous },
+        // Supabase only redirects to addresses explicitly allowed in Auth URL
+        // Configuration. Using the active origin keeps development and the
+        // eventual production domain aligned without hard-coding localhost.
+        emailRedirectTo: window.location.origin,
+      },
     });
     if (error) throw new Error(error.message);
     if (!data.user) throw new Error("Check your inbox to confirm your email, then sign in.");
