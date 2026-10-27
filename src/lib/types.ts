@@ -159,4 +159,24 @@ export const CATEGORIES: { value: Category; label: string }[] = [
 
 export const CURRENCIES: Currency[] = ["USD", "EUR", "GBP", "INR", "CAD", "AUD"];
 
-export const GOAL_LIMITS = { min: 5, max: 2000 };
+/**
+ * Requestable goal amount limits (in user's chosen currency).
+ * Configurable via Vite environment variables:
+ * - VITE_MIN_GOAL_AMOUNT (default: 5)
+ * - VITE_MAX_GOAL_AMOUNT (default: 200000)
+ */
+const envMin =
+  typeof import.meta !== "undefined" && import.meta.env?.VITE_MIN_GOAL_AMOUNT
+    ? Number(import.meta.env.VITE_MIN_GOAL_AMOUNT)
+    : NaN;
+
+const envMax =
+  typeof import.meta !== "undefined" && import.meta.env?.VITE_MAX_GOAL_AMOUNT
+    ? Number(import.meta.env.VITE_MAX_GOAL_AMOUNT)
+    : NaN;
+
+export const GOAL_LIMITS = {
+  min: Number.isFinite(envMin) && envMin > 0 ? envMin : 5,
+  max: Number.isFinite(envMax) && envMax > 0 ? envMax : 200000,
+} as const;
+

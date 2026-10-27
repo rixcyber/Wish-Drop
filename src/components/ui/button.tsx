@@ -4,23 +4,30 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap border-2 border-border text-sm font-bold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 active:translate-x-[2px] active:translate-y-[2px]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] select-none",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-[4px_4px_0_hsl(var(--foreground))] hover:-translate-x-px hover:-translate-y-px hover:shadow-[6px_6px_0_hsl(var(--foreground))]",
-        secondary: "bg-secondary text-secondary-foreground shadow-[3px_3px_0_hsl(var(--foreground))] hover:bg-accent",
-        outline: "bg-card shadow-[3px_3px_0_hsl(var(--foreground))] hover:-translate-x-px hover:-translate-y-px hover:bg-accent",
-        ghost: "border-transparent bg-transparent shadow-none hover:border-border hover:bg-accent",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        link: "text-foreground underline-offset-4 hover:underline",
+          "bg-forest text-ivory border border-forest/30 hover:bg-forest-surface hover:shadow-md hover:shadow-forest/15 hover:-translate-y-0.5 rounded-xl",
+        coral:
+          "bg-coral text-white border border-coral/30 hover:bg-coral-hover hover:shadow-md hover:shadow-coral/25 hover:-translate-y-0.5 rounded-xl",
+        secondary:
+          "bg-sage/40 text-forest border border-sage/60 hover:bg-sage/70 rounded-xl",
+        outline:
+          "bg-white/80 text-forest border border-forest/15 hover:bg-white hover:border-forest/35 hover:shadow-sm rounded-xl",
+        ghost:
+          "bg-transparent text-ink/80 hover:bg-sage/25 hover:text-forest rounded-xl",
+        destructive:
+          "bg-destructive text-white hover:bg-destructive/90 rounded-xl",
+        link:
+          "text-forest underline-offset-4 hover:underline hover:text-coral transition-colors p-0 h-auto font-medium",
       },
       size: {
         default: "h-10 px-5",
-        sm: "h-8 px-3 text-xs",
-        lg: "h-12 px-7 text-[15px]",
-        icon: "h-9 w-9",
+        sm: "h-8 px-3.5 text-xs rounded-lg",
+        lg: "h-12 px-7 text-[15px] rounded-xl",
+        icon: "h-9 w-9 rounded-lg",
       },
     },
     defaultVariants: { variant: "default", size: "default" },

@@ -27,7 +27,7 @@ create table if not exists public.wishes (
   story              text not null check (char_length(story) between 40 and 2000),
   category           text not null check (category in
                        ('education', 'technology', 'essentials', 'experiences', 'other')),
-  goal_amount        numeric(10, 2) not null check (goal_amount between 5 and 2000),
+  goal_amount        numeric(10, 2) not null check (goal_amount between 5 and 200000),
   currency           text not null default 'USD'
                        check (currency in ('USD', 'EUR', 'GBP', 'INR', 'CAD', 'AUD')),
   image_url          text,

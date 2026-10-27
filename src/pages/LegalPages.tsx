@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/SectionHeading";
 import { PAYMENT_DISCLOSURE, PAYMENT_MODE } from "@/lib/payments";
 import { paymentsOpen } from "@/lib/config";
 import { backendMode } from "@/lib/api";
+import { GOAL_LIMITS } from "@/lib/types";
 
 interface Section {
   id?: string;
@@ -30,36 +31,36 @@ function LegalPage({
   return (
     <div className="container max-w-4xl py-12 sm:py-16">
       <PageHeader eyebrow={eyebrow} title={title} description={description} />
-      <p className="mt-5 text-[11.5px] text-muted-foreground">
+      <p className="mt-5 text-xs text-olive">
         Last updated 27 October 2026 · {backendMode === "local-demo" ? "Demo build" : "Live deployment"}
       </p>
 
       {notice && (
-        <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/[0.06] px-4 py-3.5 text-[12px] leading-relaxed text-amber-100/80">
+        <div className="mt-6 rounded-2xl border border-butter/80 bg-butter/30 px-5 py-4 text-xs leading-relaxed text-amber-950">
           {notice}
         </div>
       )}
 
-      <div className="mt-10 space-y-10">
+      <div className="mt-12 space-y-12">
         {sections.map((section, index) => (
-          <section key={section.title} id={section.id} className="scroll-mt-24">
-            <h2 className="text-[17px] font-semibold tracking-[-0.01em]">
-              <span className="mr-2 text-[12px] tabular-nums text-muted-foreground">
+          <section key={section.title} id={section.id} className="scroll-mt-24 border-t border-olive/15 pt-8 first:border-0 first:pt-0">
+            <h2 className="font-serif text-2xl font-semibold tracking-tight text-forest sm:text-[26px]">
+              <span className="mr-3 font-sans text-xs font-bold uppercase tracking-wider text-coral">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {section.title}
             </h2>
-            <div className="mt-3 space-y-3 text-[13.5px] leading-[1.75] text-muted-foreground">
+            <div className="mt-4 space-y-3.5 text-[14.5px] leading-[1.8] text-ink/85">
               {section.paragraphs?.map((paragraph) => (
                 <p key={paragraph} className="text-pretty">
                   {paragraph}
                 </p>
               ))}
               {section.bullets && (
-                <ul className="space-y-2 pt-1">
+                <ul className="space-y-2.5 pt-1">
                   {section.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-2.5">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/60" />
+                    <li key={bullet} className="flex gap-3">
+                      <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-forest/40" />
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -71,28 +72,28 @@ function LegalPage({
       </div>
 
       {footnote && (
-        <div className="mt-12 flex items-start gap-2.5 rounded-xl border border-border/70 bg-card/30 p-4 text-[12px] leading-relaxed text-muted-foreground">
-          <Info className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.7} />
+        <div className="mt-12 flex items-start gap-3 rounded-2xl border border-sage/40 bg-sage/15 p-5 text-xs leading-relaxed text-olive">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-forest" strokeWidth={1.8} />
           <span>{footnote}</span>
         </div>
       )}
 
-      <div className="mt-10 flex flex-wrap gap-4 border-t border-border/60 pt-6 text-[12px]">
-        <Link to="/rules" className="text-muted-foreground hover:text-foreground">
+      <div className="mt-12 flex flex-wrap gap-5 border-t border-olive/15 pt-6 text-xs font-medium">
+        <Link to="/rules" className="text-olive hover:text-forest">
           Platform rules
         </Link>
-        <Link to="/privacy" className="text-muted-foreground hover:text-foreground">
+        <Link to="/privacy" className="text-olive hover:text-forest">
           Privacy policy
         </Link>
-        <Link to="/payments" className="text-muted-foreground hover:text-foreground">
+        <Link to="/payments" className="text-olive hover:text-forest">
           Payment disclosure
         </Link>
         <a
           href="mailto:moderation@wishdrop.demo"
-          className="ml-auto inline-flex items-center gap-1 text-foreground/70 hover:text-foreground"
+          className="ml-auto inline-flex items-center gap-1.5 text-forest hover:text-coral"
         >
           Contact moderation
-          <ArrowUpRight className="h-3 w-3" />
+          <ArrowUpRight className="h-3.5 w-3.5" />
         </a>
       </div>
     </div>
@@ -117,7 +118,7 @@ export function RulesPage() {
           title: "What a wish should be",
           bullets: [
             "A specific item or a verifiable expense — education, essential costs, a necessary repair, a modest experience.",
-            "Priced honestly, with a link or quote when one exists. The platform limit is 2,000 in your chosen currency.",
+            `Priced honestly, with a link or quote when one exists. The platform limit is ${GOAL_LIMITS.max.toLocaleString("en-US")} in your chosen currency.`,
             "Written by the person it is for. You may post on behalf of a family member only if you say so, and only with their knowledge.",
             "One open wish per person at a time is enough to keep the feed readable. Duplicate wishes are merged or removed.",
           ],

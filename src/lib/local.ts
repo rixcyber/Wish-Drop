@@ -3,6 +3,7 @@ import type { Backend, ContributionInput, ReportInput, ThankYouInput } from "./b
 import { filterWishes, sortWishes, wishProgress } from "./backend";
 import { resizeImageFile } from "./image";
 import type { AppNotification, Contribution, Wish } from "./types";
+import { validateGoalAmount } from "./validation";
 
 function notify(data: StoreData, n: AppNotification) {
   data.notifications.unshift(n);
@@ -77,6 +78,8 @@ export const localBackend: Backend = {
   },
 
   async createWish(authorId, draft) {
+    const goalError = validateGoalAmount(draft.goalAmount);
+    if (goalError) throw new Error(goalError);
     const data = await loadStore();
     const now = new Date().toISOString();
     const wish: Wish = {
@@ -110,6 +113,15 @@ export const localBackend: Backend = {
     const data = await loadStore();
     const wish = data.wishes.find((w) => w.id === id);
     if (!wish) throw new Error("Wish not found.");
+    if (patch.goalAmount !== undefined) {
+      const goalError = validateGoalAmount(patch.goalAmount);
+      if (goalError) throw new Error(goalError);
+      if (patch.goalAmount < wish.raisedAmount) {
+        throw new Error(
+          `The goal amount cannot be lower than the already raised amount (${wish.raisedAmount}).`,
+        );
+      }
+    }
     Object.assign(wish, patch, { updatedAt: new Date().toISOString() });
     wish.status = wishProgress(wish).status;
     commitStore(data);

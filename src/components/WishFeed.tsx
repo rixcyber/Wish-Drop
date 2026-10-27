@@ -83,21 +83,21 @@ export function WishFeed({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {showBanner && backendMode === "local-demo" && (
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-2 border-border bg-accent/60 px-3.5 py-2.5 text-[12px] text-muted-foreground shadow-[3px_3px_0_hsl(var(--foreground))]">
-          <Sparkles className="h-3.5 w-3.5 text-foreground/60" strokeWidth={1.8} />
-          <span className="text-foreground/80">Demo community</span>
-          <span aria-hidden="true">·</span>
-          <span>Every wish, supporter and payment here is simulated so you can explore freely.</span>
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-2xl border border-forest/15 bg-sage/35 px-4 py-3 text-[13px] text-forest">
+          <Sparkles className="h-4 w-4 text-coral shrink-0" strokeWidth={2} />
+          <span className="font-semibold">Demo community</span>
+          <span aria-hidden="true" className="text-olive">·</span>
+          <span className="text-forest/85">Every wish, supporter and payment here is simulated so you can explore freely.</span>
         </div>
       )}
 
       <div className="space-y-4">
         {showSearch && (
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-3.5 sm:flex-row">
             <div className="relative flex-1">
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" strokeWidth={1.8} />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-olive" strokeWidth={1.8} />
               <Input
                 type="search"
                 value={query}
@@ -105,9 +105,9 @@ export function WishFeed({
                   setQuery(event.target.value);
                   setVisible(limit);
                 }}
-                placeholder="Search wishes, stories, causes…"
+                placeholder="Search wishes, stories, categories…"
                 aria-label="Search wishes"
-                className="pl-10"
+                className="pl-10 rounded-xl border-olive/20 bg-white shadow-sm focus-visible:ring-coral"
               />
             </div>
             <div className="flex gap-3">
@@ -121,7 +121,7 @@ export function WishFeed({
                   setSort(event.target.value as WishSort);
                   setVisible(limit);
                 }}
-                className="min-w-[168px]"
+                className="min-w-[168px] rounded-xl border-olive/20 bg-white shadow-sm"
               >
                 <option value="newest">Newest first</option>
                 <option value="nearly_fulfilled">Nearly fulfilled</option>
@@ -135,7 +135,7 @@ export function WishFeed({
                     setBudget(event.target.value);
                     setVisible(limit);
                   }}
-                  className="min-w-[148px]"
+                  className="min-w-[148px] rounded-xl border-olive/20 bg-white shadow-sm"
                 >
                   {BUDGETS.map((item) => (
                     <option key={item.value} value={item.value}>
@@ -148,7 +148,7 @@ export function WishFeed({
           </div>
         )}
 
-        <div className="-mx-1 flex items-center gap-1.5 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="-mx-1 flex items-center gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <button
             type="button"
             onClick={() => {
@@ -156,10 +156,10 @@ export function WishFeed({
               setVisible(limit);
             }}
             className={cn(
-              "shrink-0 border-2 px-3 py-1.5 font-meta text-[10px] font-bold uppercase transition-colors",
+              "shrink-0 rounded-full border px-4 py-1.5 font-sans text-[11px] font-semibold tracking-wide transition-all",
               category === "all"
-                ? "border-border bg-primary text-primary-foreground shadow-[2px_2px_0_hsl(var(--foreground))]"
-                : "border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground",
+                ? "border-forest bg-forest text-ivory shadow-sm"
+                : "border-olive/20 bg-white/80 text-olive hover:bg-sage/25 hover:text-forest",
             )}
           >
             All wishes
@@ -173,10 +173,10 @@ export function WishFeed({
                 setVisible(limit);
               }}
               className={cn(
-                "shrink-0 border-2 px-3 py-1.5 font-meta text-[10px] font-bold uppercase transition-colors",
+                "shrink-0 rounded-full border px-4 py-1.5 font-sans text-[11px] font-semibold tracking-wide transition-all",
                 category === item.value
-                  ? "border-border bg-primary text-primary-foreground shadow-[2px_2px_0_hsl(var(--foreground))]"
-                  : "border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground",
+                  ? "border-forest bg-forest text-ivory shadow-sm"
+                  : "border-olive/20 bg-white/80 text-olive hover:bg-sage/25 hover:text-forest",
               )}
             >
               {item.label}

@@ -16,6 +16,24 @@ const REQUEST_PATTERNS: { pattern: RegExp; message: string }[] = [
   },
 ];
 
+/**
+ * Validates a request amount against platform bounds and monetary precision rules.
+ * Returns an error message string if invalid, or null if valid.
+ */
+export function validateGoalAmount(amount: unknown): string | null {
+  if (typeof amount !== "number" || !Number.isFinite(amount) || amount < GOAL_LIMITS.min) {
+    return `Ask for at least ${GOAL_LIMITS.min} — small, honest wishes work best.`;
+  }
+  if (amount > GOAL_LIMITS.max) {
+    return `Keep requests under ${GOAL_LIMITS.max.toLocaleString("en-US")}. Larger needs are better split across several verifiable items.`;
+  }
+  const rounded = Math.round(amount * 100) / 100;
+  if (Math.abs(amount - rounded) > 0.0001) {
+    return "Amount cannot have more than two decimal places.";
+  }
+  return null;
+}
+
 export function validateWishDraft(
   draft: WishDraft,
   options: { existingTitles?: string[] } = {},
@@ -40,10 +58,9 @@ export function validateWishDraft(
     errors.story = "Keep the story under 2000 characters.";
   }
 
-  if (!Number.isFinite(draft.goalAmount) || draft.goalAmount < GOAL_LIMITS.min) {
-    errors.goalAmount = `Ask for at least ${GOAL_LIMITS.min} — small, honest wishes work best.`;
-  } else if (draft.goalAmount > GOAL_LIMITS.max) {
-    errors.goalAmount = `Keep requests under ${GOAL_LIMITS.max}. Larger needs are better split across several verifiable items.`;
+  const goalError = validateGoalAmount(draft.goalAmount);
+  if (goalError) {
+    errors.goalAmount = goalError;
   }
 
   const text = `${title} ${story}`.replace(/\s+/g, " ");

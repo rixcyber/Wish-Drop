@@ -106,32 +106,32 @@ export function AccountPage() {
         }
       />
 
-      <div className="-mx-1 mt-8 flex items-center gap-1.5 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="-mx-1 mt-8 flex items-center gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {TABS.map((item) => (
           <button
             key={item.value}
             type="button"
             onClick={() => navigate(`/account?tab=${item.value}`)}
             className={cn(
-              "relative shrink-0 rounded-full border px-3.5 py-1.5 text-[12.5px] font-medium transition-colors",
+              "relative shrink-0 rounded-full border px-4 py-2 text-xs transition-all",
               tab === item.value
-                ? "border-foreground/20 bg-foreground text-background"
-                : "border-border/80 text-muted-foreground hover:border-border hover:text-foreground",
+                ? "border-forest bg-forest text-ivory font-semibold shadow-sm"
+                : "border-olive/20 bg-white/70 text-olive hover:border-forest/30 hover:text-forest",
             )}
           >
             {item.label}
             {item.value === "notifications" && unreadCount > 0 && (
               <span
                 className={cn(
-                  "ml-1.5 rounded-full px-1.5 text-[10px]",
-                  tab === item.value ? "bg-background/20" : "bg-secondary text-foreground",
+                  "ml-2 rounded-full px-1.5 py-0.2 text-[10px] font-bold",
+                  tab === item.value ? "bg-coral text-white" : "bg-coral/15 text-coral",
                 )}
               >
                 {unreadCount}
               </span>
             )}
             {item.value === "saved" && saved.length > 0 && (
-              <span className="ml-1.5 text-[10px] opacity-60">{saved.length}</span>
+              <span className="ml-1.5 text-[10px] opacity-60">({saved.length})</span>
             )}
           </button>
         ))}
@@ -198,12 +198,14 @@ export function AccountPage() {
 
 function Stat({ label, value, icon: Icon }: { label: string; value: string; icon: typeof Sparkles }) {
   return (
-    <div className="rounded-xl border border-border/70 bg-card/40 px-4 py-4">
+    <div className="rounded-2xl border border-olive/15 bg-white p-5 shadow-sm">
       <div className="flex items-center justify-between">
-        <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">{label}</p>
-        <Icon className="h-3.5 w-3.5 text-muted-foreground/70" strokeWidth={1.7} />
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-olive">{label}</p>
+        <span className="grid h-8 w-8 place-items-center rounded-xl bg-sage/20 text-forest">
+          <Icon className="h-4 w-4" strokeWidth={1.8} />
+        </span>
       </div>
-      <p className="mt-2 text-xl font-semibold tracking-tight">{value}</p>
+      <p className="mt-3 font-serif text-2xl font-bold tracking-tight text-forest">{value}</p>
     </div>
   );
 }
@@ -819,14 +821,14 @@ function Empty({
   action?: { label: string; to: string };
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-card/20 px-6 py-16 text-center">
-      <div className="mb-4 rounded-full border border-border bg-secondary/40 p-3 text-muted-foreground">
-        <Icon className="h-5 w-5" strokeWidth={1.6} />
+    <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-olive/25 bg-sage/10 px-6 py-16 text-center">
+      <div className="mb-4 rounded-2xl bg-sage/30 p-3.5 text-forest">
+        <Icon className="h-6 w-6" strokeWidth={1.8} />
       </div>
-      <h2 className="text-[15px] font-semibold">{title}</h2>
-      <p className="mt-1.5 max-w-sm text-[12.5px] leading-relaxed text-muted-foreground">{body}</p>
+      <h2 className="font-serif text-xl font-semibold text-forest">{title}</h2>
+      <p className="mt-2 max-w-sm text-xs leading-relaxed text-olive">{body}</p>
       {action && (
-        <Button asChild size="sm" className="mt-5">
+        <Button asChild variant="coral" size="sm" className="mt-6">
           <Link to={action.to}>{action.label}</Link>
         </Button>
       )}

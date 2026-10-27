@@ -69,50 +69,50 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
   }
 
   return (
-    <div className="container grid gap-12 py-14 lg:grid-cols-[0.95fr_1fr] lg:items-center lg:py-20">
+    <div className="container grid gap-12 py-12 lg:grid-cols-[0.95fr_1fr] lg:items-center lg:py-20">
       <div className="hidden lg:block">
         <Logo />
-        <h1 className="mt-8 text-balance text-[38px] font-semibold leading-[1.1] tracking-[-0.03em]">
+        <h1 className="mt-8 text-balance font-serif text-4xl font-semibold leading-[1.12] tracking-tight text-forest lg:text-[46px]">
           A small account, a quiet kind of participation.
         </h1>
-        <p className="mt-4 max-w-md text-[14px] leading-relaxed text-muted-foreground">
+        <p className="mt-5 max-w-md text-[15px] leading-relaxed text-olive">
           WishDrop needs an account so wishes can be edited, contributions can be refunded, and
           reports can be handled by a human. Browsing never requires one.
         </p>
-        <div className="mt-8 space-y-3">
+        <div className="mt-8 space-y-3.5">
           {[
             { icon: Lock, text: "Anonymous posting and anonymous support, by design." },
             { icon: ShieldCheck, text: "No addresses, phone numbers or payment details in public." },
             { icon: Sparkles, text: "Saved wishes, notifications and contribution history in one place." },
           ].map((item) => (
-            <div key={item.text} className="flex items-start gap-3 text-[13px] leading-relaxed text-muted-foreground">
-              <span className="mt-0.5 inline-flex rounded-lg border border-border/70 bg-secondary/30 p-1.5">
-                <item.icon className="h-3.5 w-3.5" strokeWidth={1.7} />
+            <div key={item.text} className="flex items-start gap-3.5 text-xs leading-relaxed text-olive">
+              <span className="mt-0.5 inline-flex rounded-xl bg-sage/30 p-2 text-forest">
+                <item.icon className="h-4 w-4" strokeWidth={1.8} />
               </span>
-              {item.text}
+              <span className="text-ink/80">{item.text}</span>
             </div>
           ))}
         </div>
 
         {backendMode === "local-demo" && (
-          <div className="mt-10 max-w-md rounded-xl border border-border/70 bg-card/40 p-4">
-            <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">Demo accounts</p>
-            <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">
+          <div className="mt-10 max-w-md rounded-2xl border border-olive/20 bg-white/75 p-5 shadow-sm">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-coral">Demo accounts</p>
+            <p className="mt-2 text-xs leading-relaxed text-olive">
               Password for every demo account:{" "}
-              <span className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[11px] text-foreground/85">
+              <span className="rounded-md bg-sage/30 px-2 py-0.5 font-mono text-[11px] font-medium text-forest">
                 demo1234
               </span>
             </p>
-            <div className="mt-3 space-y-1.5">
+            <div className="mt-3.5 space-y-1.5">
               {DEMO_ACCOUNTS.map((account) => (
                 <button
                   key={account.email}
                   type="button"
                   onClick={() => useDemoAccount(account.email)}
-                  className="flex w-full items-center justify-between gap-3 rounded-lg px-2 py-1.5 text-left text-[12px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                  className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left text-xs text-olive transition-colors hover:bg-sage/20 hover:text-forest"
                 >
                   <span className="truncate">{account.email}</span>
-                  <span className="shrink-0 text-[10.5px] text-muted-foreground/70">use</span>
+                  <span className="shrink-0 text-[10.5px] font-semibold text-coral uppercase tracking-wider">use</span>
                 </button>
               ))}
             </div>
@@ -121,11 +121,11 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
       </div>
 
       <div className="mx-auto w-full max-w-md">
-        <div className="mb-7 lg:hidden">
+        <div className="mb-8 lg:hidden">
           <Logo />
         </div>
-        <div className="rounded-2xl border border-border/70 bg-card/50 p-6 shadow-[0_30px_80px_-60px_rgba(0,0,0,1)] sm:p-8">
-          <div className="flex gap-1 rounded-xl border border-border/70 bg-background/40 p-1">
+        <div className="rounded-3xl border border-olive/15 bg-white p-7 shadow-[0_20px_50px_-20px_rgba(23,61,53,0.12)] sm:p-9">
+          <div className="flex gap-1.5 rounded-2xl border border-olive/15 bg-ivory p-1.5">
             {(
               [
                 { value: "signin", label: "Sign in", href: `/signin?next=${encodeURIComponent(next)}` },
@@ -136,10 +136,10 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
                 key={tab.value}
                 to={tab.href}
                 className={cn(
-                  "flex-1 rounded-lg px-3 py-2 text-center text-[12.5px] font-medium transition-colors",
+                  "flex-1 rounded-xl px-3 py-2 text-center text-xs font-medium transition-all",
                   mode === tab.value
-                    ? "bg-secondary text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
+                    ? "bg-forest text-ivory shadow-sm font-semibold"
+                    : "text-olive hover:text-forest",
                 )}
               >
                 {tab.label}
@@ -147,10 +147,10 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
             ))}
           </div>
 
-          <h2 className="mt-6 text-[20px] font-semibold tracking-[-0.015em]">
+          <h2 className="mt-6 font-serif text-2xl font-semibold tracking-tight text-forest">
             {isSignIn ? "Welcome back" : "Make an account"}
           </h2>
-          <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">
+          <p className="mt-1.5 text-xs leading-relaxed text-olive">
             {isSignIn
               ? "Sign in to post, save and support wishes."
               : "It takes a minute. You can stay anonymous on everything you post."}
@@ -209,12 +209,12 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
             )}
 
             {error && (
-              <p className="rounded-lg border border-red-500/25 bg-red-500/10 px-3 py-2.5 text-[12.5px] text-red-200/90">
+              <p className="rounded-xl border border-coral/30 bg-coral/10 p-3 text-xs leading-relaxed text-coral">
                 {error}
               </p>
             )}
 
-            <Button type="submit" size="lg" className="w-full" disabled={busy}>
+            <Button type="submit" variant="coral" size="lg" className="w-full mt-2" disabled={busy}>
               {busy ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
@@ -226,22 +226,22 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-[11px] leading-relaxed text-muted-foreground">
+          <p className="mt-5 text-center text-xs leading-relaxed text-olive">
             By continuing you agree to the{" "}
-            <Link to="/rules" className="underline underline-offset-4 hover:text-foreground">
+            <Link to="/rules" className="text-forest underline underline-offset-4 hover:text-coral">
               platform rules
             </Link>{" "}
             and{" "}
-            <Link to="/privacy" className="underline underline-offset-4 hover:text-foreground">
+            <Link to="/privacy" className="text-forest underline underline-offset-4 hover:text-coral">
               privacy policy
             </Link>
-            . Payments are simulated in this build.
+            .
           </p>
         </div>
 
-        <p className="mt-5 text-center text-[12px] text-muted-foreground">
+        <p className="mt-5 text-center text-xs text-olive">
           Just looking?{" "}
-          <Link to="/explore" className="text-foreground/80 underline-offset-4 hover:underline">
+          <Link to="/explore" className="font-medium text-forest underline underline-offset-4 hover:text-coral">
             Browse wishes without an account
           </Link>
         </p>

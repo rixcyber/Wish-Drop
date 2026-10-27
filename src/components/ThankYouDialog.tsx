@@ -89,15 +89,15 @@ export function ThankYouDialog({
           description="Your display name stays hidden on this thank-you message."
         />
         {error && (
-          <p className="rounded-lg border border-red-500/25 bg-red-500/10 px-3 py-2.5 text-[12.5px] text-red-200/90">
+          <p className="rounded-xl border border-coral/30 bg-coral/10 p-3 text-xs font-medium text-coral">
             {error}
           </p>
         )}
-        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+        <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
           <Button variant="ghost" onClick={onClose} disabled={busy}>
             Cancel
           </Button>
-          <Button onClick={() => void submit()} disabled={busy}>
+          <Button variant="coral" onClick={() => void submit()} disabled={busy}>
             {busy && <Loader2 className="h-4 w-4 animate-spin" />}
             Post thank-you
           </Button>

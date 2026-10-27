@@ -33,9 +33,9 @@ export function Field({ label, htmlFor, hint, error, optional, className, childr
       )}
       {children}
       {error ? (
-        <p className="text-[12.5px] text-red-300/90">{error}</p>
+        <p className="text-[12.5px] font-medium text-coral">{error}</p>
       ) : hint ? (
-        <p className="text-[12.5px] text-muted-foreground">{hint}</p>
+        <p className="text-[12.5px] text-olive">{hint}</p>
       ) : null}
     </div>
   );
@@ -50,7 +50,7 @@ export function Select({
     <div className="relative">
       <select
         className={cn(
-          "h-11 w-full appearance-none rounded-lg border border-input bg-background/60 px-3.5 pr-9 text-sm text-foreground shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+          "h-11 w-full appearance-none rounded-xl border border-olive/25 bg-white/80 px-3.5 pr-9 text-sm text-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/20 focus-visible:border-forest disabled:cursor-not-allowed disabled:opacity-50",
           className,
         )}
         {...props}
@@ -60,7 +60,7 @@ export function Select({
       <svg
         aria-hidden="true"
         viewBox="0 0 20 20"
-        className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+        className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-olive"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.6"
@@ -75,7 +75,7 @@ export function Progress({ value, className }: { value: number; className?: stri
   const safe = Math.max(0, Math.min(100, Math.round(value)));
   return (
     <div
-      className={cn("h-1.5 w-full overflow-hidden rounded-full bg-secondary", className)}
+      className={cn("h-2 w-full overflow-hidden rounded-full bg-sage/35", className)}
       role="progressbar"
       aria-valuenow={safe}
       aria-valuemin={0}
@@ -84,7 +84,7 @@ export function Progress({ value, className }: { value: number; className?: stri
       <div
         className={cn(
           "h-full rounded-full transition-[width] duration-700 ease-out",
-          safe >= 100 ? "bg-emerald-400/80" : "bg-foreground/75",
+          safe >= 100 ? "bg-forest" : "bg-coral",
         )}
         style={{ width: `${safe}%` }}
       />
@@ -106,10 +106,10 @@ export function Switch({
   disabled?: boolean;
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 rounded-xl border border-border/70 bg-background/40 px-4 py-3.5">
+    <div className="flex items-start justify-between gap-4 rounded-xl border border-olive/15 bg-white/60 p-4 transition-colors">
       <div className="space-y-1">
-        <p className="text-sm font-medium text-foreground/90">{label}</p>
-        {description && <p className="text-[12.5px] leading-relaxed text-muted-foreground">{description}</p>}
+        <p className="text-sm font-medium text-ink">{label}</p>
+        {description && <p className="text-[12.5px] leading-relaxed text-olive">{description}</p>}
       </div>
       <button
         type="button"
@@ -119,13 +119,13 @@ export function Switch({
         disabled={disabled}
         onClick={() => onChange(!checked)}
         className={cn(
-          "relative mt-0.5 h-6 w-11 shrink-0 rounded-full border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50",
-          checked ? "border-foreground/30 bg-foreground/85" : "border-border bg-secondary",
+          "relative mt-0.5 h-6 w-11 shrink-0 rounded-full border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/30 focus-visible:ring-offset-2 disabled:opacity-50",
+          checked ? "border-forest bg-forest" : "border-olive/30 bg-sage/40",
         )}
       >
         <span
           className={cn(
-            "absolute top-0.5 h-[18px] w-[18px] rounded-full bg-background transition-transform duration-200",
+            "absolute top-0.5 h-[18px] w-[18px] rounded-full bg-white shadow-sm transition-transform duration-200",
             checked ? "translate-x-[22px]" : "translate-x-0.5",
           )}
         />

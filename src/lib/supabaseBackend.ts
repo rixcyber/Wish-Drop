@@ -11,6 +11,8 @@ import type {
   ThankYou,
   Wish,
 } from "./types";
+import { validateGoalAmount } from "./validation";
+
 
 /* ------------------------------------------------------------------ rows */
 
@@ -304,6 +306,8 @@ export const supabaseBackend: Backend = {
   },
 
   async createWish(authorId, draft) {
+    const goalError = validateGoalAmount(draft.goalAmount);
+    if (goalError) throw new Error(goalError);
     const rows = unwrap(
       await getSupabase()
         .from("wishes")
@@ -325,6 +329,10 @@ export const supabaseBackend: Backend = {
   },
 
   async updateWish(id, patch) {
+    if (patch.goalAmount !== undefined) {
+      const goalError = validateGoalAmount(patch.goalAmount);
+      if (goalError) throw new Error(goalError);
+    }
     const payload: Record<string, unknown> = { updated_at: new Date().toISOString() };
     const map: (keyof Wish)[] = [
       "title",

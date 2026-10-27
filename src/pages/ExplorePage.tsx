@@ -19,7 +19,7 @@ export function ExplorePage() {
         title="Every wish here belongs to a real story."
         description="Filter by what you care about, or read until something catches. You can browse everything without an account."
         actions={
-          <Button asChild variant="outline">
+          <Button asChild variant="coral">
             <Link to="/post">
               <Plus className="h-4 w-4" />
               Post a wish

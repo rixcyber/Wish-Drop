@@ -154,42 +154,42 @@ export function WishDetailPage() {
   }
 
   return (
-    <div className="container py-8 sm:py-10">
+    <div className="container py-8 sm:py-12">
       <Link
         to="/explore"
-        className="inline-flex items-center gap-1.5 text-[12.5px] text-muted-foreground transition-colors hover:text-foreground"
+        className="inline-flex items-center gap-2 text-xs font-medium text-olive transition-colors hover:text-forest"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
-        All wishes
+        Back to all wishes
       </Link>
 
       {wish.removed && (
-        <div className="mt-6 rounded-xl border border-red-500/25 bg-red-500/[0.07] px-4 py-3.5 text-[12.5px] leading-relaxed text-red-100/85">
-          <span className="font-medium">Removed by moderation. </span>
+        <div className="mt-6 rounded-2xl border border-coral/30 bg-coral/10 px-5 py-4 text-xs leading-relaxed text-coral">
+          <span className="font-semibold">Removed by moderation. </span>
           {wish.removeReason ?? "This wish no longer meets the platform rules."} It cannot receive
           support.
         </div>
       )}
 
-      <div className="mt-7 grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
+      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-14">
         <article>
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-olive">
               {CATEGORY_LABELS[wish.category]}
             </span>
-            <span className="text-muted-foreground/40" aria-hidden="true">
+            <span className="text-olive/40" aria-hidden="true">
               ·
             </span>
             <StatusBadge status={wish.status} />
             {wish.featured && (
-              <span className="inline-flex items-center gap-1 text-[10.5px] uppercase tracking-[0.12em] text-amber-200/70">
-                <BadgeCheck className="h-3 w-3" />
+              <span className="inline-flex items-center gap-1 rounded-full bg-butter/30 px-2.5 py-0.5 text-[10.5px] font-medium uppercase tracking-[0.12em] text-forest">
+                <BadgeCheck className="h-3 w-3 text-coral" />
                 Highlighted
               </span>
             )}
           </div>
 
-          <h1 className="mt-4 text-balance text-[30px] font-semibold leading-[1.12] tracking-[-0.025em] sm:text-[38px]">
+          <h1 className="mt-4 text-balance font-serif text-3xl font-semibold leading-[1.12] tracking-tight text-forest sm:text-4xl lg:text-[42px]">
             {wish.title}
           </h1>
 
@@ -202,8 +202,8 @@ export function WishDetailPage() {
               size="md"
             />
             <div>
-              <p className="text-[13px] font-medium text-foreground/90">{identity.name}</p>
-              <p className="text-[11.5px] text-muted-foreground">
+              <p className="text-[13.5px] font-medium text-forest">{identity.name}</p>
+              <p className="text-[11.5px] text-olive">
                 Posted {timeAgo(wish.createdAt)}
                 {identity.anonymous ? " · identity kept private" : ""}
               </p>
@@ -211,7 +211,7 @@ export function WishDetailPage() {
           </div>
 
           {wish.imageUrl && (
-            <div className="mt-7 overflow-hidden rounded-2xl border border-border/70 bg-secondary/40">
+            <div className="mt-8 overflow-hidden rounded-2xl border border-olive/15 bg-sage/20 shadow-sm">
               <img
                 src={wish.imageUrl}
                 alt={`Image for the wish “${wish.title}”`}
@@ -220,7 +220,7 @@ export function WishDetailPage() {
             </div>
           )}
 
-          <div className="mt-7 space-y-4 text-[14.5px] leading-[1.75] text-foreground/85">
+          <div className="mt-8 space-y-4 text-[15px] leading-[1.8] text-ink/90">
             {wish.story.split(/\n{2,}/).map((paragraph, index) => (
               <p key={index} className="text-pretty">
                 {paragraph}
@@ -233,43 +233,43 @@ export function WishDetailPage() {
               href={wish.itemUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 flex items-center justify-between gap-4 rounded-xl border border-border/70 bg-card/40 px-4 py-3.5 transition-colors hover:border-border hover:bg-card/70"
+              className="mt-7 flex items-center justify-between gap-4 rounded-2xl border border-olive/15 bg-white/70 p-4 transition-all hover:border-forest/30 hover:bg-white hover:shadow-sm"
             >
               <div className="flex items-center gap-3">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border/70 text-muted-foreground">
-                  <Gift className="h-4 w-4" strokeWidth={1.7} />
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sage/30 text-forest">
+                  <Gift className="h-4 w-4" strokeWidth={1.8} />
                 </span>
                 <div>
-                  <p className="text-[13px] font-medium text-foreground/90">The exact item requested</p>
-                  <p className="text-[11.5px] text-muted-foreground">{hostOf(wish.itemUrl)}</p>
+                  <p className="text-[13px] font-medium text-forest">The exact item requested</p>
+                  <p className="text-[11.5px] text-olive">{hostOf(wish.itemUrl)}</p>
                 </div>
               </div>
-              <ExternalLink className="h-4 w-4 text-muted-foreground" />
+              <ExternalLink className="h-4 w-4 text-olive" />
             </a>
           )}
 
-          <section className="mt-10 border-t border-border/60 pt-8">
-            <h2 className="flex items-center gap-2 text-[17px] font-semibold">
-              <MessageSquareHeart className="h-4 w-4 text-foreground/70" strokeWidth={1.8} />
+          <section className="mt-12 border-t border-olive/15 pt-8">
+            <h2 className="flex items-center gap-2 font-serif text-2xl font-semibold text-forest">
+              <MessageSquareHeart className="h-5 w-5 text-coral" strokeWidth={1.8} />
               Thank-yous
             </h2>
-            <p className="mt-1.5 text-[12.5px] text-muted-foreground">
+            <p className="mt-1.5 text-xs text-olive">
               Written by the person who posted the wish. Only what they choose to share appears here.
             </p>
 
             {wish.thankYou ? (
-              <blockquote className="mt-5 rounded-2xl border border-border/70 bg-card/50 p-5">
-                <p className="text-[14px] leading-relaxed text-foreground/85">“{wish.thankYou}”</p>
-                <footer className="mt-3 flex items-center justify-between gap-3 text-[11.5px] text-muted-foreground">
+              <blockquote className="mt-5 rounded-2xl border border-sage/40 bg-sage/15 p-6 shadow-sm">
+                <p className="font-serif text-[16px] italic leading-relaxed text-forest">“{wish.thankYou}”</p>
+                <footer className="mt-4 flex items-center justify-between gap-3 text-xs text-olive">
                   <span className="inline-flex items-center gap-1.5">
-                    <BadgeCheck className="h-3.5 w-3.5 text-emerald-400/70" />
+                    <BadgeCheck className="h-4 w-4 text-forest" />
                     {identity.anonymous ? "Anonymous author" : identity.name}
                   </span>
                   {isOwner && (
                     <button
                       type="button"
                       onClick={() => setThankOpen(true)}
-                      className="text-foreground/70 underline-offset-4 hover:text-foreground hover:underline"
+                      className="text-forest underline underline-offset-4 hover:text-coral"
                     >
                       Edit message
                     </button>
@@ -277,8 +277,8 @@ export function WishDetailPage() {
                 </footer>
               </blockquote>
             ) : isOwner ? (
-              <div className="mt-5 rounded-2xl border border-dashed border-border/80 bg-card/30 p-5">
-                <p className="text-[13px] leading-relaxed text-muted-foreground">
+              <div className="mt-5 rounded-2xl border border-dashed border-olive/25 bg-white/50 p-6">
+                <p className="text-xs leading-relaxed text-olive">
                   {wish.status === "fulfilled"
                     ? "Your wish is funded. Post a thank-you so the people who helped know what changed."
                     : "Once your wish is fulfilled, you can leave a thank-you here. Supporters are notified without seeing your identity."}
@@ -288,22 +288,22 @@ export function WishDetailPage() {
                 </Button>
               </div>
             ) : (
-              <p className="mt-5 rounded-2xl border border-dashed border-border/80 bg-card/30 px-4 py-5 text-[12.5px] leading-relaxed text-muted-foreground">
+              <p className="mt-5 rounded-2xl border border-dashed border-olive/20 bg-white/40 px-5 py-6 text-xs leading-relaxed text-olive">
                 No public thank-you yet. {wish.status === "fulfilled" ? "The wish is funded." : "The wish is still open."}
               </p>
             )}
 
             {thankYous.length > 0 && (
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-4 space-y-3">
                 {thankYous.map((entry) => {
                   const senderProfile = profileMap.get(entry.fromProfileId);
                   const sender = entry.anonymous
                     ? "Anonymous"
                     : senderProfile?.displayName ?? "A supporter";
                   return (
-                    <li key={entry.id} className="rounded-xl border border-border/60 bg-background/30 px-4 py-3.5">
-                      <p className="text-[13px] leading-relaxed text-foreground/80">“{entry.message}”</p>
-                      <p className="mt-1.5 text-[11px] text-muted-foreground">
+                    <li key={entry.id} className="rounded-xl border border-olive/15 bg-white/60 p-4">
+                      <p className="text-[13.5px] leading-relaxed text-ink/90">“{entry.message}”</p>
+                      <p className="mt-1.5 text-xs text-olive">
                         {sender} · {timeAgo(entry.createdAt)}
                       </p>
                     </li>
@@ -314,16 +314,16 @@ export function WishDetailPage() {
           </section>
 
           {!isOwner && profile && (
-            <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-border/60 pt-6 text-[11.5px] text-muted-foreground">
+            <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-olive/15 pt-6 text-xs text-olive">
               <button
                 type="button"
                 onClick={() => setReportOpen(true)}
-                className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+                className="inline-flex items-center gap-1.5 transition-colors hover:text-coral"
               >
                 <Flag className="h-3.5 w-3.5" strokeWidth={1.8} />
                 Report this wish
               </button>
-              <span className="text-muted-foreground/50" aria-hidden="true">
+              <span className="text-olive/40" aria-hidden="true">
                 ·
               </span>
               <span>Reports are confidential and reviewed by a moderator.</span>
@@ -331,34 +331,34 @@ export function WishDetailPage() {
           )}
         </article>
 
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-2xl border border-border/70 bg-card/60 p-5">
+        <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+          <div className="rounded-3xl border border-olive/15 bg-white p-6 shadow-[0_15px_40px_-15px_rgba(23,61,53,0.08)] sm:p-7">
             <div className="flex items-baseline justify-between gap-3">
-              <p className="text-2xl font-semibold tracking-tight">
+              <p className="font-serif text-3xl font-bold tracking-tight text-forest">
                 {formatMoney(wish.raisedAmount, wish.currency)}
               </p>
-              <p className="text-[12px] text-muted-foreground">
+              <p className="text-xs text-olive">
                 of {formatMoney(wish.goalAmount, wish.currency)}
               </p>
             </div>
-            <p className="mt-1 text-[12px] text-muted-foreground">
+            <p className="mt-1.5 text-xs text-olive">
               {progress.status === "fulfilled"
                 ? "Fully funded"
                 : `${formatMoney(remaining, wish.currency)} still needed`}
             </p>
             <Progress value={progress.percent} className="mt-4" />
-            <div className="mt-3 flex items-center justify-between text-[11.5px] text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5">
-                <Users className="h-3.5 w-3.5" strokeWidth={1.8} />
+            <div className="mt-3 flex items-center justify-between text-xs text-olive">
+              <span className="inline-flex items-center gap-1.5 font-medium">
+                <Users className="h-3.5 w-3.5 text-forest" strokeWidth={1.8} />
                 {wish.supporterCount} {wish.supporterCount === 1 ? "supporter" : "supporters"}
               </span>
-              <span>{progress.percent}% funded</span>
+              <span className="font-semibold text-forest">{progress.percent}% funded</span>
             </div>
 
-            <div className="mt-5 space-y-2">
+            <div className="mt-6 space-y-2.5">
               {isOwner ? (
                 <>
-                  <div className="rounded-lg border border-border/70 bg-background/40 px-3.5 py-3 text-[12px] leading-relaxed text-muted-foreground">
+                  <div className="rounded-xl border border-olive/15 bg-ivory/60 p-3.5 text-xs leading-relaxed text-olive">
                     This is your wish. You can't support your own request, but you can edit or remove
                     it at any time.
                   </div>
@@ -371,7 +371,8 @@ export function WishDetailPage() {
                 </>
               ) : (
                 <Button
-                  className="w-full"
+                  className="w-full shadow-sm hover:shadow-md"
+                  variant="coral"
                   size="lg"
                   disabled={wish.removed || progress.status === "fulfilled" || !paymentsOpen}
                   onClick={openSupport}
@@ -397,11 +398,11 @@ export function WishDetailPage() {
               )}
 
               <div className="flex gap-2 pt-1">
-                <Button variant="ghost" size="sm" className="flex-1 text-muted-foreground" onClick={() => void handleBookmark()}>
+                <Button variant="ghost" size="sm" className="flex-1 text-olive hover:text-forest" onClick={() => void handleBookmark()}>
                   <Bookmark className="h-3.5 w-3.5" fill={saved ? "currentColor" : "none"} />
                   {saved ? "Saved" : "Save"}
                 </Button>
-                <Button variant="ghost" size="sm" className="flex-1 text-muted-foreground" onClick={() => void handleShare()}>
+                <Button variant="ghost" size="sm" className="flex-1 text-olive hover:text-forest" onClick={() => void handleShare()}>
                   <Share2 className="h-3.5 w-3.5" />
                   Share
                 </Button>
@@ -412,7 +413,7 @@ export function WishDetailPage() {
               <button
                 type="button"
                 onClick={() => setDeleteOpen(true)}
-                className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-[11.5px] text-muted-foreground transition-colors hover:bg-red-500/10 hover:text-red-200/90"
+                className="mt-3.5 inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs text-olive transition-colors hover:bg-coral/10 hover:text-coral"
               >
                 <Trash2 className="h-3.5 w-3.5" />
                 Delete this wish
@@ -420,35 +421,35 @@ export function WishDetailPage() {
             )}
           </div>
 
-          <div className="space-y-3 rounded-2xl border border-border/70 bg-card/30 p-5">
-            <h2 className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+          <div className="space-y-3 rounded-2xl border border-sage/40 bg-sage/15 p-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-forest">
               Keeping this safe
             </h2>
-            <p className="flex items-start gap-2.5 text-[12px] leading-relaxed text-muted-foreground">
-              <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
+            <p className="flex items-start gap-2.5 text-xs leading-relaxed text-ink/80">
+              <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-forest" strokeWidth={1.8} />
               Delivery is arranged privately after funding. No address or phone number is ever shown
               on a wish.
             </p>
-            <p className="flex items-start gap-2.5 text-[12px] leading-relaxed text-muted-foreground">
-              <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
+            <p className="flex items-start gap-2.5 text-xs leading-relaxed text-ink/80">
+              <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-forest" strokeWidth={1.8} />
               Anyone asking for payment off-platform is removed. Keep everything inside WishDrop.
             </p>
             {PAYMENT_MODE === "demo" && paymentsOpen && (
-              <p className="rounded-lg border border-amber-500/20 bg-amber-500/[0.06] px-3 py-2.5 text-[11px] leading-relaxed text-amber-100/75">
+              <p className="rounded-xl border border-butter/80 bg-butter/25 p-3 text-xs leading-relaxed text-amber-950">
                 Demo build: support recorded here is simulated. No money is transferred and no order
                 is placed.
               </p>
             )}
             {!paymentsOpen && (
-              <p className="rounded-lg border border-border/70 bg-background/40 px-3 py-2.5 text-[11px] leading-relaxed text-muted-foreground">
+              <p className="rounded-xl border border-olive/15 bg-white/70 p-3 text-xs leading-relaxed text-olive">
                 {DONATIONS_CLOSED_COPY}
               </p>
             )}
           </div>
 
           {isOwner && (
-            <div className="rounded-2xl border border-border/70 bg-card/30 p-5 text-[12px] leading-relaxed text-muted-foreground">
-              <p className="font-medium text-foreground/85">Your public identity</p>
+            <div className="rounded-2xl border border-olive/15 bg-white/60 p-5 text-xs leading-relaxed text-olive">
+              <p className="font-medium text-forest">Your public identity</p>
               <p className="mt-1.5">
                 {authorHandle.anonymous
                   ? "Your profile is anonymous, so this wish shows a stable anonymous handle instead of your name."
@@ -456,7 +457,7 @@ export function WishDetailPage() {
               </p>
               <Link
                 to="/account?tab=settings"
-                className="mt-2 inline-block text-foreground/80 underline-offset-4 hover:underline"
+                className="mt-2 inline-block text-forest underline underline-offset-4 hover:text-coral"
               >
                 Change in profile settings
               </Link>
@@ -466,14 +467,17 @@ export function WishDetailPage() {
       </div>
 
       {related.length > 0 && (
-        <section className="mt-20 border-t border-border/60 pt-10">
-          <div className="mb-6 flex items-end justify-between gap-4">
-            <h2 className="text-[20px] font-semibold tracking-[-0.015em]">More in {CATEGORY_LABELS[wish.category]}</h2>
-            <Link to="/explore" className="text-[12.5px] text-muted-foreground hover:text-foreground">
-              See all
+        <section className="mt-20 border-t border-olive/15 pt-12">
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-coral">Similar Wishes</span>
+              <h2 className="mt-1 font-serif text-2xl font-semibold text-forest sm:text-3xl">More in {CATEGORY_LABELS[wish.category]}</h2>
+            </div>
+            <Link to="/explore" className="text-xs font-medium text-olive hover:text-forest">
+              See all wishes →
             </Link>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {related.map((item: Wish) => (
               <WishCard
                 key={item.id}

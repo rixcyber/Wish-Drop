@@ -134,7 +134,7 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 rounded-xl border border-border/70 bg-background/40 p-1">
+        <div className="grid grid-cols-2 gap-2 rounded-2xl border border-olive/15 bg-ivory p-1.5">
           {(
             [
               { value: "money", label: "Contribute money", icon: Wallet },
@@ -146,10 +146,10 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
               type="button"
               onClick={() => setMethod(option.value)}
               className={cn(
-                "flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-[12.5px] font-medium transition-colors",
+                "flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-medium transition-all",
                 method === option.value
-                  ? "bg-secondary text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
+                  ? "bg-forest text-ivory font-semibold shadow-sm"
+                  : "text-olive hover:text-forest",
               )}
             >
               <option.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
@@ -159,7 +159,7 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
         </div>
 
         {method === "money" ? (
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             <Field label="Amount" htmlFor="contribution-amount" hint="Demo mode — no card details are collected.">
               <div className="relative">
                 <Input
@@ -170,7 +170,7 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
                   placeholder="0"
                   className="pr-16 text-[15px] tabular-nums"
                 />
-                <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[12px] text-muted-foreground">
+                <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-olive">
                   {wish.currency}
                 </span>
               </div>
@@ -182,10 +182,10 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
                   type="button"
                   onClick={() => setAmount(String(preset))}
                   className={cn(
-                    "rounded-full border px-3 py-1.5 text-[12px] transition-colors",
+                    "rounded-full border px-3.5 py-1.5 text-xs transition-all",
                     Number(amount) === preset
-                      ? "border-foreground/25 bg-foreground text-background"
-                      : "border-border text-muted-foreground hover:border-border hover:text-foreground",
+                      ? "border-forest bg-forest text-ivory font-semibold shadow-sm"
+                      : "border-olive/20 bg-white/70 text-olive hover:border-forest/40 hover:text-forest",
                   )}
                 >
                   {preset === remaining ? `Cover the rest · ${formatMoney(preset, wish.currency)}` : formatMoney(preset, wish.currency)}
@@ -194,10 +194,10 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
             </div>
           </div>
         ) : (
-          <div className="space-y-3">
-            <div className="rounded-xl border border-border/70 bg-background/40 p-4 text-[12.5px] leading-relaxed text-muted-foreground">
-              <p className="font-medium text-foreground/85">How gifting works</p>
-              <p className="mt-1.5">
+          <div className="space-y-3.5">
+            <div className="rounded-2xl border border-sage/40 bg-sage/15 p-4 text-xs leading-relaxed text-olive">
+              <p className="font-semibold text-forest">How gifting works</p>
+              <p className="mt-1.5 text-ink/80">
                 In a live build you would buy the exact item from the verified retailer below.
                 WishDrop records the confirmed order value so the wish's progress stays accurate,
                 and the recipient never sees your address or payment details.
@@ -207,7 +207,7 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
                   href={wish.itemUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2.5 inline-flex items-center gap-1.5 text-[12px] text-foreground/85 underline-offset-4 hover:underline"
+                  className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-medium text-forest underline underline-offset-4 hover:text-coral"
                 >
                   Open the retailer listing
                   <ExternalLink className="h-3 w-3" />
@@ -223,20 +223,20 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
                   onChange={(event) => setAmount(event.target.value.replace(/[^\d.]/g, ""))}
                   className="pr-16 text-[15px] tabular-nums"
                 />
-                <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[12px] text-muted-foreground">
+                <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-olive">
                   {wish.currency}
                 </span>
               </div>
             </Field>
-            <label className="flex cursor-pointer items-start gap-2.5 rounded-lg border border-border/70 bg-background/30 p-3 text-[12px] leading-relaxed text-muted-foreground">
+            <label className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-olive/15 bg-white/60 p-3 text-xs leading-relaxed text-ink/80">
               <input
                 type="checkbox"
                 checked={giftAcknowledged}
                 onChange={(event) => setGiftAcknowledged(event.target.checked)}
-                className="mt-0.5 h-3.5 w-3.5 accent-foreground"
+                className="mt-0.5 h-4 w-4 rounded border-olive/30 accent-coral"
               />
               <span>
-                I understand this records a <span className="text-foreground/85">demo</span> gift
+                I understand this records a <span className="font-medium text-forest">demo</span> gift
                 order. No retailer is contacted and nothing ships.
               </span>
             </label>
@@ -262,14 +262,14 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
           description="Your display name is hidden from the wish owner and from everyone else. WishDrop still needs an account for refunds and safety."
         />
 
-        <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-3.5 text-[11.5px] leading-relaxed text-amber-100/80">
-          <span className="font-medium text-amber-100/90">Demo payment. </span>
+        <div className="rounded-2xl border border-butter/80 bg-butter/30 p-3.5 text-xs leading-relaxed text-amber-950">
+          <span className="font-semibold text-forest">Demo payment. </span>
           No card is charged, no money moves, and this wish is not really funded. A live build only
           marks contributions confirmed after the payment provider's webhook.
         </div>
 
         {error && (
-          <p className="rounded-lg border border-red-500/25 bg-red-500/10 px-3 py-2.5 text-[12.5px] text-red-200/90">
+          <p className="rounded-xl border border-coral/30 bg-coral/10 p-3 text-xs font-medium text-coral">
             {error}
           </p>
         )}
@@ -277,6 +277,7 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
         <Button
           onClick={() => void submit()}
           disabled={busy || remaining <= 0}
+          variant="coral"
           className="w-full"
           size="lg"
         >
@@ -297,9 +298,9 @@ export function ContributeDialog({ wish, open, onClose, onDone }: ContributeDial
             </>
           )}
         </Button>
-        <p className="text-center text-[11px] leading-relaxed text-muted-foreground">
+        <p className="text-center text-xs leading-relaxed text-olive">
           Contributions are refundable in a live build under the{" "}
-          <Link to="/payments" className="underline underline-offset-4 hover:text-foreground">
+          <Link to="/payments" className="text-forest underline underline-offset-4 hover:text-coral">
             published payment policy
           </Link>
           .

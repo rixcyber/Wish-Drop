@@ -298,6 +298,8 @@ export function PostWishPage() {
                       value={amountText}
                       onChange={(event) => setAmountText(event.target.value.replace(/[^\d.]/g, ""))}
                       placeholder="0"
+                      min={GOAL_LIMITS.min}
+                      max={GOAL_LIMITS.max}
                       className="pr-12 tabular-nums"
                     />
                     <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11.5px] text-muted-foreground">
@@ -392,7 +394,7 @@ export function PostWishPage() {
               </p>
             </div>
 
-            <div className="grid gap-2.5">
+            <div className="grid gap-3">
               {FULFILLMENT_OPTIONS.map((option) => {
                 const active = draft.fulfillmentMethod === option.value;
                 return (
@@ -401,25 +403,25 @@ export function PostWishPage() {
                     type="button"
                     onClick={() => patch({ fulfillmentMethod: option.value })}
                     className={cn(
-                      "flex items-start gap-3 rounded-xl border px-4 py-3.5 text-left transition-colors",
+                      "flex items-start gap-3.5 rounded-2xl border p-4 text-left transition-all",
                       active
-                        ? "border-foreground/25 bg-secondary/60"
-                        : "border-border/70 bg-card/30 hover:border-border hover:bg-card/60",
+                        ? "border-forest bg-forest text-ivory shadow-sm"
+                        : "border-olive/20 bg-white/80 text-ink hover:border-forest/30 hover:bg-white",
                     )}
                   >
                     <span
                       className={cn(
-                        "mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border",
-                        active ? "border-foreground/20 text-foreground" : "border-border/70 text-muted-foreground",
+                        "mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition-colors",
+                        active ? "border-sage/30 bg-sage/20 text-butter" : "border-olive/20 bg-sage/20 text-forest",
                       )}
                     >
-                      <option.icon className="h-4 w-4" strokeWidth={1.7} />
+                      <option.icon className="h-4 w-4" strokeWidth={1.8} />
                     </span>
                     <span>
-                      <span className="block text-[13.5px] font-medium text-foreground/90">
+                      <span className={cn("block text-[14px] font-medium", active ? "text-ivory" : "text-forest")}>
                         {option.label}
                       </span>
-                      <span className="mt-0.5 block text-[12px] leading-relaxed text-muted-foreground">
+                      <span className={cn("mt-0.5 block text-xs leading-relaxed", active ? "text-sage" : "text-olive")}>
                         {option.description}
                       </span>
                     </span>
@@ -436,10 +438,10 @@ export function PostWishPage() {
             />
           </section>
 
-          <section className="space-y-4 border-t border-border/60 pt-8">
-            <div className="rounded-xl border border-border/70 bg-card/30 p-4">
-              <p className="flex items-start gap-2.5 text-[12.5px] leading-relaxed text-muted-foreground">
-                <Info className="mt-0.5 h-4 w-4 shrink-0 text-foreground/60" strokeWidth={1.7} />
+          <section className="space-y-5 border-t border-olive/15 pt-8">
+            <div className="rounded-2xl border border-olive/15 bg-white/70 p-4.5">
+              <p className="flex items-start gap-2.5 text-xs leading-relaxed text-olive">
+                <Info className="mt-0.5 h-4 w-4 shrink-0 text-forest" strokeWidth={1.8} />
                 <span>
                   Publishing confirms the wish is yours, the amount is honest, and you will not ask
                   anyone to pay outside WishDrop. Misleading wishes are removed and repeat offenders
@@ -449,7 +451,7 @@ export function PostWishPage() {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button size="lg" onClick={() => void handleSubmit()} disabled={submitting || uploading}>
+              <Button variant="coral" size="lg" onClick={() => void handleSubmit()} disabled={submitting || uploading}>
                 {submitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -464,7 +466,7 @@ export function PostWishPage() {
               </Button>
               <Link
                 to={editing ? `/wishes/${editing.id}` : "/explore"}
-                className="text-[12.5px] text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                className="text-xs text-olive underline-offset-4 hover:text-forest hover:underline"
               >
                 Cancel
               </Link>
@@ -472,39 +474,39 @@ export function PostWishPage() {
           </section>
         </div>
 
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+        <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
           <div>
-            <p className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-              <Sparkles className="h-3 w-3" strokeWidth={1.8} />
+            <p className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-coral">
+              <Sparkles className="h-3.5 w-3.5" strokeWidth={1.8} />
               Live preview
             </p>
             <WishCard wish={previewWish} author={profile} saved={false} />
           </div>
 
-          <div className="rounded-2xl border border-border/70 bg-card/30 p-5">
-            <h2 className="text-[12px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+          <div className="rounded-3xl border border-sage/40 bg-sage/15 p-6">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-forest">
               What makes a wish work
             </h2>
-            <ul className="mt-3 space-y-2.5 text-[12px] leading-relaxed text-muted-foreground">
+            <ul className="mt-3.5 space-y-2.5 text-xs leading-relaxed text-ink/80">
               <li className="flex gap-2">
-                <span className="text-foreground/40">01</span>
+                <span className="font-semibold text-coral">01</span>
                 A specific item or verifiable expense — not a general request for cash.
               </li>
               <li className="flex gap-2">
-                <span className="text-foreground/40">02</span>
+                <span className="font-semibold text-coral">02</span>
                 A price you could show a receipt for.
               </li>
               <li className="flex gap-2">
-                <span className="text-foreground/40">03</span>
+                <span className="font-semibold text-coral">03</span>
                 A story that explains the gap, not one that performs it.
               </li>
               <li className="flex gap-2">
-                <span className="text-foreground/40">04</span>
+                <span className="font-semibold text-coral">04</span>
                 No contact details, addresses or other people's private information.
               </li>
             </ul>
-            <div className="mt-4 flex items-start gap-2 border-t border-border/60 pt-3.5 text-[11.5px] leading-relaxed text-muted-foreground">
-              <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
+            <div className="mt-4 flex items-start gap-2 border-t border-sage/30 pt-3.5 text-xs leading-relaxed text-olive">
+              <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-forest" strokeWidth={1.8} />
               <span>
                 Never share payment details. WishDrop will never ask you to move a conversation to
                 another app.
@@ -513,14 +515,14 @@ export function PostWishPage() {
           </div>
 
           {editing && editing.raisedAmount > 0 && (
-            <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-4 text-[11.5px] leading-relaxed text-amber-100/80">
+            <div className="rounded-2xl border border-butter/80 bg-butter/30 p-4 text-xs leading-relaxed text-amber-950">
               This wish has already received {formatMoney(editing.raisedAmount, editing.currency)}.
               Editing the story is fine; lowering the goal below the amount received is not.
             </div>
           )}
 
-          <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-            <Upload className="h-3 w-3" />
+          <p className="flex items-center gap-1.5 text-xs text-olive">
+            <Upload className="h-3.5 w-3.5" />
             Images are resized in your browser before upload.
           </p>
         </aside>
