@@ -10,6 +10,14 @@ export const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
  */
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
+// A deployed site must never silently fall back to browser-only demo data.
+// Development can still use the local demo without credentials.
+if (import.meta.env.PROD && !isSupabaseConfigured) {
+  throw new Error(
+    "WishDrop cannot start in production without VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.",
+  );
+}
+
 let client: SupabaseClient | null = null;
 
 export function getSupabase(): SupabaseClient {

@@ -44,7 +44,14 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
         await signIn(email, password);
         toast.success("Welcome back");
       } else {
-        await signUp({ email, password, displayName, anonymous });
+        const signedIn = await signUp({ email, password, displayName, anonymous });
+        if (!signedIn) {
+          toast.success("Check your inbox", {
+            description: "Confirm your email, then return here to sign in.",
+          });
+          navigate(`/signin?next=${encodeURIComponent(next)}`, { replace: true });
+          return;
+        }
         toast.success("Your account is ready", { description: "Post a wish when you feel ready." });
       }
       navigate(next, { replace: true });

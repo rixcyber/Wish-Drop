@@ -46,6 +46,7 @@ export function ThankYouDialog({
       await api.postThankYou({
         wishId: wish.id,
         fromProfileId: profile.id,
+        toProfileId: wish.authorId,
         anonymous,
         message,
       });

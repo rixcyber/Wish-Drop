@@ -136,9 +136,15 @@ begin
   values (
     new.id,
     coalesce(new.email, ''),
-    coalesce(split_part(coalesce(new.email, 'member'), '@', 1), 'member')
+    coalesce(
+      nullif(left(new.raw_user_meta_data ->> 'display_name', 40), ''),
+      left(split_part(coalesce(new.email, 'member'), '@', 1), 40)
+    )
   )
   on conflict (id) do nothing;
+  update public.profiles
+     set anonymous = coalesce((new.raw_user_meta_data ->> 'anonymous')::boolean, false)
+   where id = new.id;
   return new;
 end;
 $$;
@@ -147,6 +153,80 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+-- Browser clients may edit presentation fields, but may never elevate their
+-- role, reactivate a suspension, alter an email, or manipulate wish totals.
+-- SQL run by the project owner and service-role Edge Functions have no auth.uid
+-- and therefore remain available for legitimate admin/server operations.
+create or replace function public.guard_profile_update()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and (
+    new.id is distinct from old.id or
+    new.email is distinct from old.email or
+    new.role is distinct from old.role or
+    new.status is distinct from old.status
+  ) then
+    raise exception 'Profile identity, email, role, and status are server-managed.';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists profiles_guard_update on public.profiles;
+create trigger profiles_guard_update
+  before update on public.profiles
+  for each row execute function public.guard_profile_update();
+
+create or replace function public.guard_wish_update()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and (
+    new.id is distinct from old.id or
+    new.author_id is distinct from old.author_id or
+    new.raised_amount is distinct from old.raised_amount or
+    new.supporter_count is distinct from old.supporter_count
+  ) then
+    raise exception 'Wish identity and funding totals are server-managed.';
+  end if;
+
+  if auth.uid() is not null and not public.is_admin() and (
+    new.removed is distinct from old.removed or
+    new.remove_reason is distinct from old.remove_reason or
+    new.featured is distinct from old.featured
+  ) then
+    raise exception 'Only moderators can change wish moderation status.';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists wishes_guard_update on public.wishes;
+create trigger wishes_guard_update
+  before update on public.wishes
+  for each row execute function public.guard_wish_update();
+
+create or replace function public.notify_wish_moderation()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if new.removed and not old.removed then
+    insert into public.notifications (profile_id, kind, title, body, href)
+    values (
+      new.author_id,
+      'moderation',
+      'Your wish was removed by moderation',
+      coalesce(new.remove_reason, 'It did not meet the platform rules.'),
+      '/account?tab=wishes'
+    );
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists wishes_moderation_notification on public.wishes;
+create trigger wishes_moderation_notification
+  after update on public.wishes
+  for each row execute function public.notify_wish_moderation();
 
 -- One open wish per identical title (blocks copy-paste duplicates)
 create or replace function public.prevent_duplicate_wish()

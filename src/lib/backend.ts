@@ -36,6 +36,7 @@ export interface ReportInput {
 export interface ThankYouInput {
   wishId: string;
   fromProfileId: string;
+  toProfileId: string;
   anonymous: boolean;
   message: string;
 }
@@ -54,7 +55,7 @@ export interface Backend {
     password: string;
     displayName: string;
     anonymous: boolean;
-  }): Promise<DemoSession>;
+  }): Promise<DemoSession | null>;
   signOut(): Promise<void>;
   getProfile(id: string): Promise<Profile | null>;
   listProfiles(): Promise<Profile[]>;

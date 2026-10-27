@@ -23,7 +23,7 @@ interface AuthValue {
   /** true while the initial session lookup is in flight */
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (input: SignUpInput) => Promise<void>;
+  signUp: (input: SignUpInput) => Promise<boolean>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
   notifications: AppNotification[];
@@ -94,7 +94,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signUp = useCallback(
     async (input: SignUpInput) => {
       const next = await api.signUp(input);
+      if (!next) {
+        await hydrate(null);
+        return false;
+      }
       await hydrate(next);
+      return true;
     },
     [hydrate],
   );

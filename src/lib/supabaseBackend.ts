@@ -226,21 +226,19 @@ export const supabaseBackend: Backend = {
 
   async signUp({ email, password, displayName, anonymous }) {
     const supabase = getSupabase();
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { display_name: displayName, anonymous } },
+    });
     if (error) throw new Error(error.message);
     if (!data.user) throw new Error("Check your inbox to confirm your email, then sign in.");
-    unwrap(
-      await supabase.from("profiles").upsert({
-        id: data.user.id,
-        email,
-        display_name: displayName,
-        anonymous,
-      }),
-    );
     if (data.session) {
       return { profileId: data.user.id, email: data.user.email ?? "" };
     }
-    throw new Error("Account created. Confirm your email, then sign in.");
+    // With email confirmation enabled there is no authenticated session yet.
+    // The auth trigger creates the profile from the metadata above.
+    return null;
   },
 
   async signOut() {
@@ -517,6 +515,7 @@ export const supabaseBackend: Backend = {
         .insert({
           wish_id: input.wishId,
           from_profile_id: input.fromProfileId,
+          to_profile_id: input.toProfileId,
           anonymous: input.anonymous,
           message: input.message,
         })
