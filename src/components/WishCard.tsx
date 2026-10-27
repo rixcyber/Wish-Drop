@@ -58,14 +58,14 @@ export function WishCard({ wish, author, saved, onToggleSave, className }: WishC
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card/50 transition duration-300 hover:-translate-y-0.5 hover:border-border hover:bg-card/80 hover:shadow-[0_24px_60px_-40px_rgba(0,0,0,1)]",
+        "group relative flex h-full flex-col overflow-hidden border-2 border-border bg-card shadow-[5px_5px_0_hsl(var(--foreground))] transition duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[8px_8px_0_hsl(var(--primary))]",
         className,
       )}
     >
       {wish.imageUrl && (
         <Link
           to={`/wishes/${wish.id}`}
-          className="relative block aspect-[16/10] overflow-hidden bg-secondary/60"
+          className="relative block aspect-[16/10] overflow-hidden border-b-2 border-border bg-secondary/60"
           aria-label={wish.title}
           tabIndex={-1}
         >
@@ -75,8 +75,8 @@ export function WishCard({ wish, author, saved, onToggleSave, className }: WishC
             loading="lazy"
             className="h-full w-full object-cover opacity-90 transition duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-100"
           />
-          <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card/95 via-card/10 to-transparent" />
-          <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/45 px-2.5 py-1 text-[10.5px] font-medium uppercase tracking-[0.12em] text-white/80 backdrop-blur">
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          <span className="absolute left-3 top-3 inline-flex -rotate-2 items-center gap-1.5 border-2 border-border bg-accent px-2 py-1 font-meta text-[9px] font-bold uppercase text-foreground shadow-[2px_2px_0_hsl(var(--foreground))]">
             {CATEGORY_LABELS[wish.category]}
           </span>
         </Link>
@@ -93,8 +93,8 @@ export function WishCard({ wish, author, saved, onToggleSave, className }: WishC
               size="sm"
             />
             <div className="min-w-0">
-              <p className="truncate text-[13px] font-medium text-foreground/90">{identity.name}</p>
-              <p className="text-[11.5px] text-muted-foreground">{timeAgo(wish.createdAt)}</p>
+              <p className="truncate text-[13px] font-bold text-foreground">{identity.name}</p>
+              <p className="font-meta text-[9px] text-muted-foreground">{timeAgo(wish.createdAt)}</p>
             </div>
           </div>
           {onToggleSave && (
@@ -104,10 +104,10 @@ export function WishCard({ wish, author, saved, onToggleSave, className }: WishC
               aria-label={saved ? "Remove from saved wishes" : "Save this wish"}
               aria-pressed={Boolean(saved)}
               className={cn(
-                "-mr-1 -mt-1 rounded-full p-2 transition-colors",
+                "-mr-1 -mt-1 border-2 border-transparent p-1.5 transition-colors",
                 saved
                   ? "text-foreground"
-                  : "text-muted-foreground/70 hover:bg-accent hover:text-foreground",
+                  : "text-muted-foreground/70 hover:border-border hover:bg-accent hover:text-foreground",
               )}
             >
               <Bookmark className="h-4 w-4" fill={saved ? "currentColor" : "none"} strokeWidth={1.7} />
@@ -118,20 +118,20 @@ export function WishCard({ wish, author, saved, onToggleSave, className }: WishC
         {!wish.imageUrl && <CategoryLabel category={wish.category} />}
 
         <Link to={`/wishes/${wish.id}`} className="block">
-          <h3 className="text-balance text-[17px] font-semibold leading-snug tracking-[-0.01em] text-foreground transition-colors group-hover:text-foreground">
+          <h3 className="text-balance text-[25px] font-display leading-[0.95] text-foreground transition-colors group-hover:text-primary">
             {wish.title}
           </h3>
         </Link>
 
-        <p className="line-clamp-3 text-[13.5px] leading-relaxed text-muted-foreground">{wish.story}</p>
+        <p className="line-clamp-3 text-[13px] leading-relaxed text-muted-foreground">{wish.story}</p>
 
         <div className="mt-auto space-y-3 pt-1">
           <div className="flex items-baseline justify-between gap-3">
-            <p className="text-[13px] text-foreground/85">
-              <span className="font-semibold">{formatMoney(wish.raisedAmount, wish.currency)}</span>
+            <p className="font-meta text-[10px] text-foreground/85">
+              <span className="font-bold">{formatMoney(wish.raisedAmount, wish.currency)}</span>
               <span className="text-muted-foreground"> of {formatMoney(wish.goalAmount, wish.currency)}</span>
             </p>
-            <span className="text-[11.5px] tabular-nums text-muted-foreground">{progress.percent}%</span>
+            <span className="font-meta text-[10px] tabular-nums text-muted-foreground">{progress.percent}%</span>
           </div>
           <Progress value={progress.percent} />
 
@@ -145,7 +145,7 @@ export function WishCard({ wish, author, saved, onToggleSave, className }: WishC
 
           <Link
             to={`/wishes/${wish.id}`}
-            className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-border bg-transparent text-[13px] font-medium text-foreground/90 transition-colors hover:border-foreground/25 hover:bg-accent hover:text-foreground"
+            className="flex h-10 w-full items-center justify-center gap-2 border-2 border-border bg-background text-[12px] font-bold text-foreground transition-colors hover:bg-primary"
           >
             <HeartHandshake className="h-4 w-4" strokeWidth={1.7} />
             {wish.status === "fulfilled" ? "Read the story" : "Help fulfill this wish"}
@@ -158,7 +158,7 @@ export function WishCard({ wish, author, saved, onToggleSave, className }: WishC
 
 export function WishCardSkeleton() {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card/40">
+    <div className="flex h-full flex-col overflow-hidden border-2 border-border bg-card shadow-[4px_4px_0_hsl(var(--foreground))]">
       <div className="aspect-[16/10] animate-pulse bg-secondary/60" />
       <div className="space-y-3 p-5">
         <div className="flex items-center gap-3">

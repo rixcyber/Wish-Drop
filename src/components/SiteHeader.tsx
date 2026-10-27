@@ -32,8 +32,8 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="container flex h-16 items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 border-b-2 border-border bg-background/95 backdrop-blur">
+      <div className="container flex h-[68px] items-center justify-between gap-4">
         <div className="flex items-center gap-7">
           <Logo />
           <nav className="hidden items-center gap-6 lg:flex">
@@ -46,7 +46,7 @@ export function SiteHeader() {
                   to={link.to}
                   className={cn(
                     "text-[13px] transition-colors",
-                    active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+                    active ? "font-bold text-foreground underline decoration-primary decoration-2 underline-offset-4" : "font-meta text-[11px] text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {link.label}
@@ -58,7 +58,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           {backendMode === "local-demo" && (
-            <span className="mr-1 hidden items-center gap-1.5 rounded-full border border-border/70 px-2.5 py-1 text-[10.5px] uppercase tracking-[0.12em] text-muted-foreground md:inline-flex">
+            <span className="mr-1 hidden items-center gap-1.5 border-2 border-border bg-accent px-2 py-1 font-meta text-[9px] font-bold uppercase md:inline-flex">
               <Sparkles className="h-3 w-3" strokeWidth={1.8} />
               Demo mode
             </span>
@@ -69,7 +69,7 @@ export function SiteHeader() {
               <Link
                 to="/account?tab=notifications"
                 aria-label={`Notifications${unreadCount ? ` (${unreadCount} unread)` : ""}`}
-                className="relative hidden rounded-lg p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground sm:block"
+                className="relative hidden border-2 border-transparent p-2 text-muted-foreground transition-colors hover:border-border hover:bg-accent hover:text-foreground sm:block"
               >
                 <Bell className="h-[18px] w-[18px]" strokeWidth={1.7} />
                 {unreadCount > 0 && (
@@ -83,7 +83,7 @@ export function SiteHeader() {
                 <DropdownMenu.Trigger asChild>
                   <button
                     type="button"
-                    className="flex items-center gap-2 rounded-full border border-border/70 py-1 pl-1 pr-2.5 text-[12.5px] text-foreground/85 transition-colors hover:border-border hover:bg-accent/60"
+                    className="flex items-center gap-2 border-2 border-border bg-card py-1 pl-1 pr-2.5 text-[12.5px] text-foreground/85 shadow-[2px_2px_0_hsl(var(--foreground))] transition-colors hover:bg-accent"
                     aria-label="Account menu"
                   >
                     <Avatar
@@ -103,7 +103,7 @@ export function SiteHeader() {
                   <DropdownMenu.Content
                     align="end"
                     sideOffset={8}
-                    className="z-50 w-56 animate-fade-in rounded-xl border border-border bg-popover p-1.5 text-[13px] shadow-2xl"
+                    className="z-50 w-56 animate-fade-in border-2 border-border bg-popover p-1.5 text-[13px] shadow-[5px_5px_0_hsl(var(--foreground))]"
                   >
                     <div className="px-2.5 py-2">
                       <p className="truncate font-medium">{profile.displayName}</p>
@@ -144,20 +144,20 @@ export function SiteHeader() {
           ) : (
             <Link
               to="/signin"
-              className="hidden rounded-lg px-3 py-2 text-[13px] text-muted-foreground transition-colors hover:text-foreground sm:block"
+              className="hidden font-meta text-[11px] text-muted-foreground transition-colors hover:text-foreground sm:block"
             >
               Sign In
             </Link>
           )}
 
-          <Button asChild size="sm" className="hidden h-9 rounded-lg px-4 text-[13px] sm:inline-flex">
-            <Link to="/post">Post a Wish</Link>
+          <Button asChild size="sm" className="hidden h-9 px-4 text-[13px] sm:inline-flex">
+            <Link to="/post">Make a wish</Link>
           </Button>
 
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}
-            className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground lg:hidden"
+            className="border-2 border-border bg-card p-2 text-foreground shadow-[2px_2px_0_hsl(var(--foreground))] transition-colors hover:bg-accent lg:hidden"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
@@ -167,7 +167,7 @@ export function SiteHeader() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-border/60 bg-background/95 backdrop-blur-xl lg:hidden">
+        <div className="border-t-2 border-border bg-background lg:hidden">
           <div className="container space-y-1 py-4">
             {LINKS.map((link) => (
               <Link

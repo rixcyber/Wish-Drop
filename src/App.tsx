@@ -57,14 +57,14 @@ export default function App() {
         </Route>
       </Routes>
       <Toaster
-        theme="dark"
+        theme="light"
         position="bottom-right"
         closeButton
         toastOptions={{
           style: {
-            background: "hsl(0 0% 8%)",
-            border: "1px solid hsl(0 0% 17%)",
-            color: "hsl(40 20% 96%)",
+            background: "hsl(42 38% 99%)",
+            border: "2px solid hsl(0 0% 13%)",
+            color: "hsl(0 0% 10%)",
             fontSize: "13px",
           },
         }}
